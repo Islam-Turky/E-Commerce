@@ -1,31 +1,30 @@
-import { Box, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Switch, Typography } from "@mui/material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Box, Collapse, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Switch } from "@mui/material";
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import LogoutIcon from '@mui/icons-material/Logout';
 import DevicesIcon from '@mui/icons-material/Devices';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { LinearGradient } from "react-text-gradients";
-import '@fontsource/roboto';
 import { useState } from "react";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+    // necessary for content to be below app bar    
     ...theme.mixins.toolbar,
     justifyContent: 'center',
 }));
 function Navigtion() {
-    const [open, setOpen] = useState(false);
+    const [openClothes, setOpenClothes] = useState(false);
     const [openFood, setOpenFood] = useState(false);
     const [openElec, setOpenElec] = useState(false);
     const [check, setCheck] = useState(false);
 
     return (
-        <Box>
+        <Box position="fixed">
             <Drawer
                 sx={{
                     width: '250px',
@@ -46,17 +45,19 @@ function Navigtion() {
                         </LinearGradient>
                     </h1>
                 </DrawerHeader>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+
                 <List>
                     <ListItem>
-                        <ListItemButton onClick={() => setOpen(!open)}>
+                        <ListItemButton onClick={() => setOpenClothes(!openClothes)}>
                             <ListItemIcon>
                                 <CheckroomIcon />
                             </ListItemIcon>
                             <ListItemText primary={"Clothes"}/>
-                            {open ? <ExpandLess /> : <ExpandMore />}
+                            {openClothes ? <ExpandLess /> : <ExpandMore />}
                         </ListItemButton>
                     </ListItem>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse in={openClothes} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
                             <ListItemButton sx={{ pl: 11 }}>
                                 <ListItemText primary="T-Shirt"/>
@@ -123,12 +124,31 @@ function Navigtion() {
                         </List>
                     </Collapse>
                 </List>
-                <Box sx={{ bottom: 10, left: 10, position: "absolute", display: 'flex', flexDirection: 'column', justifyContent: "space-between" }}>
-                    <Switch checked={check} onClick={() => setCheck(!check)} />
-                    <IconButton>
-                        <SettingsIcon sx={{ fontSize: '30px', color: 'black' }}/>
-                        <Typography variant="h6">Settings</Typography>
-                    </IconButton>
+                <List>
+                    <ListItem>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <SettingsIcon sx={{ fontSize: '30px' }}/>
+                            </ListItemIcon>
+                            <ListItemText primary={"Settings"}/>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <LogoutIcon sx={{ fontSize: '30px' }}/>
+                            </ListItemIcon>
+                            <ListItemText primary={"Sign Out"}/>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <Switch checked={check} onClick={() => setCheck(!check)} />
+                            </ListItemIcon>
+                        </ListItemButton>
+                    </ListItem>
+                </List>
                 </Box>
             </Drawer>
         </Box>
